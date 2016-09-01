@@ -1,0 +1,15 @@
+
+* {
+  -webkit-border-radius: 0 !important;
+     -moz-border-radius: 0 !important;
+          border-radius: 0 !important;
+}
+
+.jumbotron {
+    background: transparent;
+}
+
+.vertical-center {
+    padding-left:10%;
+    margin:10%;;
+}
