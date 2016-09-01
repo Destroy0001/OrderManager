@@ -29,7 +29,7 @@ class User extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false
+        'id' => true
     ];
 
     /**
@@ -40,4 +40,6 @@ class User extends Entity
     protected $_hidden = [
         'password'
     ];
+    
+    
 }

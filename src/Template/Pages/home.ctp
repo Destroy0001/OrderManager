@@ -4,7 +4,6 @@
  * Author: Ashish Jhanwar
  **/
 $this->layout = false;
-$description = 'OrderManager! Manage your Ecommerce with ease!';
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +12,7 @@ $description = 'OrderManager! Manage your Ecommerce with ease!';
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <?= $cakeDescription ?>
+        OrderManager! Manage your Ecommerce with ease!
     </title>
     <?= $this->Html->meta('icon') ?>
     <?= $this->Html->css('bootstrap.min.css') ?>

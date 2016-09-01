@@ -44,35 +44,28 @@ use Cake\Routing\Route\DashedRoute;
 Router::defaultRouteClass(DashedRoute::class);
 
 Router::scope('/', function (RouteBuilder $routes) {
-    /**
-     * Here, we are connecting '/' (base path) to a controller called 'Pages',
-     * its action called 'display', and we pass a param to select the view file
-     * to use (in this case, src/Template/Pages/home.ctp)...
-     */
-    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
-    /**
-     * ...and connect the rest of 'Pages' controller's URLs.
-     */
-    $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
+	/*Home Page*/
+    $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home'],['_method'=>'GET']);
+	
+    /*Rest URL for login managements*/
+    $routes->connect('/login',['controller'=>'Login','action' => 'create'],['_method'=>'POST']);
+	$routes->connect('/logout',['controller'=>'Login','action'=>'logout'],['_method'=>'GET']);
+	$routes->connect('/checklogin',['controller'=>'Login','action'=>'check'],['_method'=>'GET']);
 
-    /**
-     * Connect catchall routes for all controllers.
-     *
-     * Using the argument `DashedRoute`, the `fallbacks` method is a shortcut for
-     *    `$routes->connect('/:controller', ['action' => 'index'], ['routeClass' => 'DashedRoute']);`
-     *    `$routes->connect('/:controller/:action/*', [], ['routeClass' => 'DashedRoute']);`
-     *
-     * Any route class can be used with this method, such as:
-     * - DashedRoute
-     * - InflectedRoute
-     * - Route
-     * - Or your own route class
-     *
-     * You can remove these routes once you've connected the
-     * routes you want in your application.
-     */
-    $routes->fallbacks('DashedRoute');
+	/*Rest URL for Order management*/
+	$routes->connect('/ordermanager',['controller'=>'Order','action'=>'show'],['_method'=>'GET']);
+	$routes->connect('/orderupdate',['controller'=>'Order','action'=>'update'],['_method'=>'POST']); 
+	$routes->connect('/orderdelete',['controller'=>'Order','action'=>'delete'],['_method'=>'PUT']);
+	
+	/*Rest URL to fetch chart data*/
+	$routes->connect('/chartorderdate',['controller'=>'Chart','action'=>'orderDate'],['_method'=>'GET']);
+	$routes->connect('/chartproductdate',['controller'=>'Chart','action'=>'productDate'],['_method'=>'GET']);
+	$routes->connect('/chartorderstore',['controller'=>'Chart','action'=>'orderStore'],['_method'=>'GET']);
+	$routes->connect('/chartproductstore',['controller'=>'Chart','action'=>'productStore'],['_method'=>'GET']);
+	
+	$routes->fallbacks('DashedRoute');
+	
 });
 
 /**

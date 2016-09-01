@@ -6,6 +6,7 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
+
 /**
  * User Model
  *
@@ -93,4 +94,5 @@ class UserTable extends Table
 
         return $rules;
     }
+    
 }
