@@ -45,18 +45,17 @@ Router::defaultRouteClass(DashedRoute::class);
 
 Router::scope('/', function (RouteBuilder $routes) {
 
-	/*Home Page*/
+	/*Home Pages*/
     $routes->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home'],['_method'=>'GET']);
+    $routes->connect('/home', ['controller' => 'Pages', 'action' => 'display', 'userHome'],['_method'=>'GET']);
 	
+    /*Order Management Pages*/
+    $routes->connect('/orders',['controller'=>'Orders', 'action'=>'display'],['_method'=>'Post']);
+    
     /*Rest URL for login managements*/
-    $routes->connect('/login',['controller'=>'Login','action' => 'create'],['_method'=>'POST']);
-	$routes->connect('/logout',['controller'=>'Login','action'=>'logout'],['_method'=>'GET']);
-	$routes->connect('/checklogin',['controller'=>'Login','action'=>'check'],['_method'=>'GET']);
+    $routes->connect('/login',['controller'=>'User','action' => 'login'],['_method'=>'POST']);
+	$routes->connect('/logout',['controller'=>'User','action'=>'logout'],['_method'=>'GET']);
 
-	/*Rest URL for Order management*/
-	$routes->connect('/ordermanager',['controller'=>'Order','action'=>'show'],['_method'=>'GET']);
-	$routes->connect('/orderupdate',['controller'=>'Order','action'=>'update'],['_method'=>'POST']); 
-	$routes->connect('/orderdelete',['controller'=>'Order','action'=>'delete'],['_method'=>'PUT']);
 	
 	/*Rest URL to fetch chart data*/
 	$routes->connect('/chartorderdate',['controller'=>'Chart','action'=>'orderDate'],['_method'=>'GET']);

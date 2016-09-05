@@ -13,3 +13,7 @@
     padding-left:10%;
     margin:10%;;
 }
+
+#errorAlert{
+    display: none;
+}

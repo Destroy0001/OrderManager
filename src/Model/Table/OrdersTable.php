@@ -7,22 +7,21 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Order Model
+ * Orders Model
  *
- * @method \App\Model\Entity\Order get($primaryKey, $options = [])
- * @method \App\Model\Entity\Order newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Order[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Order|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Order patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Order[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Order findOrCreate($search, callable $callback = null)
+ * @method \App\Model\Entity\Orders get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Orders newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Orders[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Orders|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Orders patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Orders[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Orders findOrCreate($search, callable $callback = null)
  */
-class OrderTable extends Table
+class OrdersTable extends Table
 {
 
     /**
      * Initialize method
-     *
      * @param array $config The configuration for the Table.
      * @return void
      */
@@ -30,9 +29,14 @@ class OrderTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('order');
+        $this->table('orders');
         $this->displayField('id');
         $this->primaryKey('id');
+        
+        $this->belongsTo('ProductStore', array(
+            'foreignKey' => 'productStoreID',
+            'joinType' => 'INNER',
+        ));
     }
 
     /**
@@ -88,4 +92,24 @@ class OrderTable extends Table
 
         return $validator;
     }
+    
+    
+    /**
+     *Custom finder method for fetching all order 
+     **/
+    public function findOrderData(Query $query, array $options)
+    {
+       
+        $query = $this
+                    ->find()
+                     ->contain(array(
+                                'ProductStore.Store',
+                                'ProductStore.Product')
+                     )
+                     ->where(array('Product.userID'=>$options['user']));
+ 
+      return $query; 
+    } 
+
+    
 }

@@ -27,7 +27,6 @@ use Cake\Event\Event;
  */
 class AppController extends Controller
 {
-
     /**
      * Initialization hook method.
      *
@@ -40,9 +39,25 @@ class AppController extends Controller
     public function initialize()
     {
         parent::initialize();
-
+      
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+        $this->loadComponent('Auth',array(
+                    'loginAction' => array(
+                               'controller' => 'Pages',
+                               'action'=>'display',
+                               'home'),
+                
+                    'authenticate' => array(
+                               'Form' => array(
+                                       'finder'=>'auth',
+                                       'userModel' => 'User',
+                                       'fields' =>array(
+                                               'username'=>'email',
+                                               'password'=>'password')
+                                            )
+                                    )
+                            ));
     }
 
     /**
@@ -58,5 +73,10 @@ class AppController extends Controller
         ) {
             $this->set('_serialize', true);
         }
+    }
+    
+    public function beforeFilter(Event $event)
+    {
+           $this->Auth->allow(['logout','login','display']);
     }
 }

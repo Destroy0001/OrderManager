@@ -40,15 +40,15 @@ class ProductTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsToMany('Store', [
-            'foreignKey' => 'product_id',
-            'targetForeignKey' => 'store_id',
-            'joinTable' => 'product_store'
-        ]);
+        $this->belongsTo('User',
+                array('foreignKey' => 'productID',
+                      'joinType' => 'INNER')
+        );
+        
     }
-
-    /**
-     * Default validation rules.
+    
+    
+     /** Default validation rules.
      *
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator

@@ -4,7 +4,7 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Order Entity
+ * Orders Entity
  *
  * @property int $id
  * @property int $productStoreID
@@ -17,7 +17,7 @@ use Cake\ORM\Entity;
  * @property bool $isOrderShipped
  * @property string $orderDescription
  */
-class Order extends Entity
+class Orders extends Entity
 {
 
     /**

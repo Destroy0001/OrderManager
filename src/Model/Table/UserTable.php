@@ -95,4 +95,15 @@ class UserTable extends Table
         return $rules;
     }
     
+    /**
+     *Custom finder method for login
+     **/
+    public function findAuth(Query $query, array $options)
+    {
+        
+        $query
+        ->select(['id', 'email', 'password'])
+        ->where(['User.active' => 1],['User.email'=>$options['username']]);
+        return $query;
+    }
 }

@@ -33,6 +33,16 @@ class ProductStoreTable extends Table
         $this->table('product_store');
         $this->displayField('id');
         $this->primaryKey('id');
+        
+        $this->belongsTo('Store', array(
+            'foreignKey' => 'storeID',
+            'joinType' => 'INNER',
+        ));
+        
+        $this->belongsTo('Product', array(
+                'foreignKey' => 'productID',
+                'joinType' => 'INNER',
+        ));
     }
 
     /**
