@@ -17,7 +17,6 @@ $this->layout = false;
     <?= $this->Html->meta('icon') ?>
     
     <link   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"    rel="stylesheet">
-    <link   href="http://vitalets.github.io/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
     <?= $this->Html->css('main.css') ?>
 
 </head>

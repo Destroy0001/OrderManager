@@ -17,88 +17,57 @@ $this->layout = false;
     <?= $this->Html->meta('icon') ?>
     
     <link   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"    rel="stylesheet">
-    <link   href="http://vitalets.github.io/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/esvit/ng-table/1.0.0/dist/ng-table.min.css">
     <?= $this->Html->css('main.css') ?>
     
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
-    <script src="http://vitalets.github.io/angular-xeditable/dist/js/xeditable.js"></script>
-    <script src="http://momentjs.com/downloads/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.1.3/ui-bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.1.3/ui-bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.min.js"></script>
+    <script src="https://cdn.rawgit.com/esvit/ng-table/1.0.0/dist/ng-table.js"></script>
     <?= $this->Html->script('order') ?>
 </head>
+
 <body class="home">
     <div class="jumbotron">
        <h1>Welcome to OrderManager!</h1> 
        <p>Manager all your sales in one place.</p> 
        <a href='/logout' class='.btn-default'></a>
        <div ng-app="app" ng-controller="OrderGridController" ng-init="loadOrders()">
-          <table class="table table-bordered table-hover table-condensed">
-            <tr style="font-weight: bold">
-              <td style="width:auto">Date <a href="#" ng-click="sortType = 'OrderDate'"><span class="fa fa-caret-down"></span></a></td>
-              <td style="width:auto">Shipping Date</td>
-              <td style="width:auto">Shipping Status</td>
-              <td style="width:auto">Customer Name </td>
-              <td style="width:auto">Customer Address </td>
-              <td style="width:auto">Customer Instruction </td>
-              <td style="width:auto">Store</td>
-              <td style="width:auto">Product Name</td>
-              <td style="width:auto">Product Description</td>
-              <td style="width:auto">Product Price</td>
-            </tr>
-            <tr ng-repeat="order in orders">
-            <!---  OrderDate --->
-             <td> 
-                <span class='orderDate'>
-                  {{ order.orderDate | date:"medium" }}
-                </span>
+          <table ng-table="tableParams" class="table table-bordered table-hover table-condensed">
+            <tr ng-repeat="row in $data track by row.id">
+             <td data-title="'Order ID'" sortable="'orderID'"> 
+                  {{ row.id }}
              </td>
-             <td>
-                <div editable-combodate="order.orderShippingDate" e-name="orderShippingDate" onbeforesave="checkName($data, order.id)">
-                      {{ order.orderShippingDate | date:"medium" }}
-                </div>
+             <td data-title="'Order Date'" sortable="'orderDate'"> 
+                  {{ row.orderDate | date:"medium" }}
              </td>
-             <td>
-                <div editable-checkbox="order.isOrderShipped" e-title="Shipped?" e-name="isOrderShipped" onbeforesave="checkName($data, order.id)">
-                      {{ order.isOrderShipped && "Shipped" || "Pending" }}
-                </div>
+             <td data-title="'Order Shipping Date'" sortable="'orderShippingDate'">
+                  {{ row.orderShippingDate | date:"medium" }}
              </td>
-             <td>
-                <span editable-text="order.orderCustomerName" e-name="CustomerName" onbeforesave="checkName($data, order.id)">
-                    {{ order.orderCustomerName || 'empty' }}
-                </span>
+             <td data-title="'Order Shipping Status'" sortable="'isOrderShipped'">
+                  {{ row.isOrderShipped && "Shipped" || "Pending" }}
              </td>
-             <td>
-                <span editable-textarea="order.orderCustomerAddress" e-name="CustomerAddress" onbeforesave="checkName($data, order.id)">
-                    {{ order.orderCustomerAddress || 'empty' }}
-                </span>
+             <td data-title="'Customer Name'" sortable="'customerName'">
+                  {{ row.orderCustomerName || 'empty' }}
              </td>
-             <td>
-                <span editable-textarea="order.orderDescription" e-name="orderDescription" onbeforesave="checkName($data, order.id)">
-                    {{ order.orderDescription || 'empty' }}
-                </span>
+             <td data-title="'Customer Address'">
+                  {{ row.orderCustomerAddress || 'empty' }}
              </td>
-             <td>
-                <span class='productStoreName'>
-                    {{ order.product_store.store.storename || 'empty' }}
-                </span>
+             <td data-title="'Order Description'">
+                  {{ row.orderDescription || 'empty' }}
              </td>
-             <td>
-                <span class='productName'>
-                    {{ order.product_store.product.productName || 'empty' }}
-                </span>
+             <td data-title="'Store'" sortable="'productStoreName'">
+                  {{ row.product_store.store.storename || 'empty' }}
              </td>
-             <td>
-                <span class='productDescription'>
-                    {{ order.product_store.product.productDescription || 'empty' }}
-                </span>
+             <td data-title="'Product Name'" sortable="'productName'">
+                  {{ row.product_store.product.productName || 'empty' }}
              </td>
-             <td>
-                <span class='productStorePrice'>
-                    {{ order.product_store.productStorePrice || 'empty' }}
-                </span>
+             <td data-title="'Product Description'">
+                  {{ row.product_store.product.productDescription || 'empty' }}
+             </td>
+             <td data-title="'Order Value'" sortable="'productStorePrice'">
+                  {{ row.product_store.productStorePrice || 'empty' }}
              </td>
             </tr>
           </table>

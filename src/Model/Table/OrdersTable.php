@@ -99,6 +99,9 @@ class OrdersTable extends Table
      **/
     public function findOrderData(Query $query, array $options)
     {
+        $user = $options['user']; 
+        $count = $options['queryParams']['count'];
+        $page = $options['queryParams']['page'];
        
         $query = $this
                     ->find()
@@ -106,7 +109,9 @@ class OrdersTable extends Table
                                 'ProductStore.Store',
                                 'ProductStore.Product')
                      )
-                     ->where(array('Product.userID'=>$options['user']));
+                     ->where(array('Product.userID'=>$options['user']))
+                     ->limit($count)
+                     ->page($page);
  
       return $query; 
     } 

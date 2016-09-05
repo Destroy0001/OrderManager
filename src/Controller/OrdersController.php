@@ -13,13 +13,28 @@ class OrdersController extends AppController
 
     
     public function display()
-    {
+    {   
+        $queryParams = $this ->request->query;
+        if(!$queryParams){
+            $queryParams = array(
+                    'count' => '10', 
+                    'page' => '1', 
+                    'sorting' => array(
+                                'orderDate'=>'desc'
+                                )
+            );
+        }
+        
         $userID = $this->Auth->user('id');
         if($userID !== null){
             $Orders = $this
                         ->Orders
-                        ->find('OrderData',array('user' => $this->Auth->user('id')))
-                        ->toArray();
+                        ->find('OrderData',
+                                    array(
+                                         'user' => $this->Auth->user('id'),
+                                          'queryParams' => $queryParams )
+                                          );
+            
             $this->autoRender = false;
             $this->response->type('json');
             $this->response->body(json_encode($Orders));
