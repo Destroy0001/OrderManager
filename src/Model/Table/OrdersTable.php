@@ -19,6 +19,25 @@ use Cake\Validation\Validator;
  */
 class OrdersTable extends Table
 {
+    
+    public static $updateKeys = array(
+            'orderDescription'=>'orderDescription',
+            'orderCustomerAddress'=>'orderCustomerAddress',
+            'orderCustomerName'=>'orderCustomerName',
+            'isOrderShipped'=>'isOrderShipped',
+            'orderShippingDate'=>'orderShippingDate'
+    );
+    
+    public static $sortKeys = array(
+            'orderID' => 'Orders.id',
+            'orderDate'=> 'Orders.orderDate',
+            'orderShippingDate'=>'Orders.orderShippingDate',
+            'isOrderShipped'=>'Orders.isOrderShipped',
+            'customerName'=>'Orders.orderCustomerName',
+            'productStoreName'=>'Store.storename',
+            'productName'=>'Product.productName',
+            'productStorePrice'=>'ProductStore.productStorePrice'
+    );
 
     /**
      * Initialize method
@@ -102,7 +121,12 @@ class OrdersTable extends Table
         $user = $options['user']; 
         $count = $options['queryParams']['count'];
         $page = $options['queryParams']['page'];
-       
+        $sortingData = $options['queryParams']['sorting'];
+        $sortingKey =  $sortingData?array_keys($sortingData)[0]:'orderID'; 
+        $sortingDir = $sortingData[$sortingKey]?$sortingData[$sortingKey]:'asc'; 
+        $sortKeyList = self::$sortKeys;
+        $sortingColumn = $sortKeyList[$sortingKey]?$sortKeyList[$sortingKey]:'Orders.id';
+         
         $query = $this
                     ->find()
                      ->contain(array(
@@ -110,6 +134,7 @@ class OrdersTable extends Table
                                 'ProductStore.Product')
                      )
                      ->where(array('Product.userID'=>$options['user']))
+                     ->order(array($sortingColumn => $sortingDir))
                      ->limit($count)
                      ->page($page);
  

@@ -29,6 +29,7 @@ class UserController extends AppController
         $this->autoRender = false;
         $this->response->type('json');
         $this->response->body(json_encode($arr));
+        return $this->response; 
     }
     
     
@@ -38,25 +39,6 @@ class UserController extends AppController
         $this->redirect('/login');
     }
     
-    
-    public function check() {
-        if ($this->request->is('post')) {
-            $user = $this->Auth->identify();
-            if ($this->Auth->isAuthorized($user)) {
-                $arr = array("login" => "true");
-            }else{
-                $arr = array("login" => "false");
-                $this->redirect('/');
-            }
-        }else{
-            $arr = array("login" => "false");
-            $this->redirect('/');
-        }
-        $this->autoRender = false;
-        $this->response->type('json');
-        $this->response->body(json_encode($arr));
-        
-    }
 
     /*************************************************
      *  Below method are created to 
