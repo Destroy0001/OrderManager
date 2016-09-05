@@ -20,29 +20,27 @@ $this->layout = false;
         <link rel="stylesheet" href="https://cdn.rawgit.com/esvit/ng-table/1.0.0/dist/ng-table.min.css">
         <link rel="stylesheet" href="http://vitalets.github.io/angular-xeditable/dist/css/xeditable.css">
         <?= $this->Html->css('main.css') ?>
-        
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.1.3/ui-bootstrap.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.min.js"></script>
-        <script src="https://cdn.rawgit.com/esvit/ng-table/1.0.0/dist/ng-table.js"></script>
-        <script src="http://vitalets.github.io/angular-xeditable/dist/js/xeditable.js"></script>
-        <script src="http://momentjs.com/downloads/moment.min.js"></script>
-        
-        <?= $this->Html->script('order') ?>
     </head>
     <body class="home">
         <div class="jumbotron">
            <h1>Welcome to OrderManager!</h1> 
            <p>Manager all your sales in one place.</p> 
-           <a href="/logout" class='btn btn-default'> Log Out</a>
            <hr/>
+           
+           <a href="/logout" class="btn btn-default"> Log Out</a>
+           <a href="/reports" class="btn btn-default">Reports</a>
+           
            <hr/> 
            <div ng-app="app" ng-controller="OrderGridController">
-               <script type="text/ng-template" id="alert.html">
+              
+              <script type="text/ng-template" id="alert.html">
                     <div ng-transclude></div>
-               </script>
-              <div uib-alert template-url="alert.html" ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()">{{alert.msg}}</div>
+              </script>
+              <div uib-alert template-url="alert.html" ng-repeat="alert in alerts" ng-class="'alert-' + (alert.type || 'warning')" close="closeAlert()">
+                {{alert.msg}}
+              </div>
+              
+              
               <table ng-table="tableParams" class="table table-bordered table-hover table-condensed">
                 <tr ng-repeat="row in $data track by row.id">
                  <td data-title="'Order ID'" sortable="'orderID'"> 
@@ -92,5 +90,16 @@ $this->layout = false;
               </table>
             </div>
         </div>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.1.3/ui-bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.min.js"></script>
+        
+        <script src="https://cdn.rawgit.com/esvit/ng-table/1.0.0/dist/ng-table.js"></script>
+        <script src="http://vitalets.github.io/angular-xeditable/dist/js/xeditable.js"></script>
+        <script src="http://momentjs.com/downloads/moment.min.js"></script>
+        
+        <?= $this->Html->script('order') ?>
     </body>
 </html>

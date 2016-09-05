@@ -2,13 +2,12 @@
  * Filename: Order.js
  * Contains Frontend Code for displaying all Orders.
  */
-var app = angular.module("app", ["ui.bootstrap","ngResource","ngTable","xeditable"]);
-app.run(function(editableOptions) {
-	  editableOptions.theme = 'bs3';
-	});
-
 
 (function(){
+	var app = angular.module("app", ["ui.bootstrap","ngResource","ngTable","xeditable"]);
+	app.run(function(editableOptions) {
+		  editableOptions.theme = 'bs3';
+		});
 	app.controller('OrderGridController', function($scope,NgTableParams,$resource,$http) {
 	    var Api = $resource("/orders");
 	    $scope.tableParams = new NgTableParams({
@@ -48,11 +47,13 @@ app.run(function(editableOptions) {
 	    						//success callback
 	    						$scope.addAlert('Order saved','success');
 	    					},function(response){
-	    						//redirect callback
+	    						//error callback
 	    						if(response.status == '500' || response.status == '400')
 	    							$scope.addAlert('Order saving error','danger');
-	    						else if(response.status == '401' || response.status == '403' )
-	    							window.location.replace("/home");
+	    						else if(response.status == '401' || response.status == '403' ){
+	    							alert("Hello there! You need to login again. ");
+	    							window.location.replace("/");
+	    						}
 	    						else
 	    							$scope.addAlert('Unknown error occured','danger');
 	    							
