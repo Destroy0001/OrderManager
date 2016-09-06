@@ -14,10 +14,27 @@ $this->layout = false;
         <title>
             OrderManager! Manage your Ecommerce with ease!
         </title>
+        <!--- all css files --->
         <?= $this->Html->css('bootstrap.min') ?>
         <?= $this->Html->css('xeditable') ?>
         <?= $this->Html->css('ng-table.min') ?>
         <?= $this->Html->css('main') ?>
+        
+        
+        <!-- all js files --->
+        <?= $this->Html->script('jquery.min.js') ?>
+        <?= $this->Html->script('angular.min') ?>
+        <?= $this->Html->script('angular-resource.min') ?>
+        <?= $this->Html->script('angular-animate') ?>
+        <?= $this->Html->script('angular-sanitize') ?>
+        <?= $this->Html->script('ui-bootstrap.min') ?>
+        <?= $this->Html->script('ui-bootstrap-tpls-2.1.3') ?>
+        <?= $this->Html->script('xeditable') ?>
+        <?= $this->Html->script('ng-table')?>
+        <?= $this->Html->script('moment.min') ?>
+        <?= $this->Html->script('Chart.bundle.min') ?>
+        <?= $this->Html->script('angular-chart') ?>
+        <?= $this->Html->script('order') ?>
     </head>
     <body class="home" ng-app="table">
         <div class="jumbotron" >
@@ -101,18 +118,5 @@ $this->layout = false;
                   </uib-tab>
              </uib-tabset>
         </div>
-        <?= $this->Html->script('jquery.min.js') ?>
-        <?= $this->Html->script('angular.min') ?>
-        <?= $this->Html->script('angular-resource.min') ?>
-        <?= $this->Html->script('angular-animate') ?>
-        <?= $this->Html->script('angular-sanitize') ?>
-        <?= $this->Html->script('ui-bootstrap.min') ?>
-        <?= $this->Html->script('ui-bootstrap-tpls-2.1.3') ?>
-        <?= $this->Html->script('xeditable') ?>
-        <?= $this->Html->script('ng-table')?>
-        <?= $this->Html->script('moment.min') ?>
-        <?= $this->Html->script('Chart.bundle.min') ?>
-        <?= $this->Html->script('angular-chart') ?>
-        <?= $this->Html->script('order') ?>
     </body>
 </html>
