@@ -19,7 +19,7 @@ $(function(){
 		}; 
 		
 		$.post('/login',loginData,function(data,status){
-			if(data.login)
+			if(data.login == 'true')
 				window.location.replace("/home");
 			else{
 				$('#errorAlert').html('Invalid Credentials!').show();
