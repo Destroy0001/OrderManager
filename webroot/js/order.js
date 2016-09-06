@@ -4,21 +4,22 @@
  */
 
 (function(){
-	var app = angular.module("app", ["ui.bootstrap","ngResource","ngTable","xeditable"]);
-	app.run(function(editableOptions) {
+	var table = angular.module("table", ["ui.bootstrap","ngResource","ngTable","xeditable"]);
+	table.run(function(editableOptions) {
 		  editableOptions.theme = 'bs3';
 		});
-	app.controller('OrderGridController', function($scope,NgTableParams,$resource,$http) {
+	table.controller('OrderGridController', function($scope,NgTableParams,$resource,$http) {
 	    var Api = $resource("/orders");
 	    $scope.tableParams = new NgTableParams({
-	        page: 1,
-	        count: 10,
+	        page:1,
+	        count:10,
+	        total:100,
 	        sorting: {orderID:'asc'}
 	      },{
 	      getData: function(params) {
 	        return Api.query(params.url()).$promise.then(function(data){
 	        	//success callback
-	          params.total(data);
+	          params.total(data.length);
 	          return data;
 	        },function(data){
 	        	//redirect callback
@@ -26,11 +27,11 @@
 	        });
 	      }
 	    });
+	    
 	    $scope.alerts = [];
 	    $scope.addAlert = function(alertMessage,alertType) {
 	    	$scope.alerts = [];
 	    	$scope.alerts.push({type:alertType,msg:alertMessage});
-	    	
 	    };
 	    
 	    $scope.closeAlert = function() {
@@ -61,5 +62,6 @@
 	    };
 	    
 	});
+	
 })();
 

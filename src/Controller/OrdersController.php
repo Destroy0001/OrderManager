@@ -62,33 +62,34 @@ class OrdersController extends AppController
         }
         
         if(!$this->request->is('post')){
-            throw new BadRequestException();
+            throw new BadRequestException('Invalid Request');
         }
         
         $data = $this->request->data;
-        if(!$data){
-            throw new BadRequestException();
+        if(empty($data)){
+            throw new BadRequestException('Invalid Request Data');
         }
         $orderID = $data['id']; 
-        if(!$orderID){
-            throw new BadRequestException();
+        if(empty($orderID)){
+            throw new BadRequestException('Invalid OrderID :'.$orderID);
         }
         $orderColumn = $data['columnName']; 
-        if(!$orderColumn){
-            throw new BadRequestException();
+        if(empty($orderColumn)){
+            throw new BadRequestException('Invalid Column Name :'.$orderColumn);
         }
         $orders = $this->Orders;
         $updateKeys = $orders::$updateKeys;
         
         $saveColumn = $updateKeys[$orderColumn];
        
-        if(!$saveColumn){
-            throw new BadRequestException();
+        if(empty($saveColumn)){
+            throw new BadRequestException('Invalid Column Name :'.$saveColumn);
         }
         
         $orderData = $data['columnData'];
-        if($orderData === null || trim($orderData) ===''){
-            throw new BadRequestException();
+        //not checking with empty as empty treats boolean false as empty too. */ 
+        if($orderData === null){
+            throw new BadRequestException('Invalid Data to save: '.$orderData);
         }
         
         $order = $this->Orders->get($orderID);
@@ -96,9 +97,11 @@ class OrdersController extends AppController
            $orderData = strtotime($orderData);
         }
         
-        $order->{$saveColumn} = $orderData;
-        $order->orderLastUpdated = new \Datetime(); 
-        $orders->save($order);
+        if($order->{$saveColumn} !== $orderData){
+            $order->{$saveColumn} = $orderData;
+            $order->orderLastUpdated = new \Datetime();
+            $orders->save($order);
+        }
 
         $this->autoRender = false;
         $this->response->type('json');

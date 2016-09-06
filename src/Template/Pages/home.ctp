@@ -14,10 +14,8 @@ $this->layout = false;
     <title>
         OrderManager! Manage your Ecommerce with ease!
     </title>
-    <?= $this->Html->meta('icon') ?>
-    
-    <link   href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"    rel="stylesheet">
-    <?= $this->Html->css('main.css') ?>
+    <?= $this->Html->css('bootstrap.min') ?>
+    <?= $this->Html->css('main') ?>
 
 </head>
 <body class="home">
@@ -44,7 +42,7 @@ $this->layout = false;
               </div>
             </form>
        </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <?= $this->Html->script('jquery.min') ?>
     <?= $this->Html->script('login') ?>
 </body>
 </html>

@@ -9,11 +9,10 @@
     background: transparent;
 }
 
-.vertical-center {
-    padding-left:10%;
-    margin:10%;;
-}
-
 #errorAlert{
     display: none;
 }
+
+.tab-pane {
+    margin: 20px 20px;
+  }
