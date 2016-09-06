@@ -58,10 +58,8 @@ Router::scope('/', function (RouteBuilder $routes) {
 
 	
 	/*Rest URL to fetch chart data*/
-	$routes->connect('/chartorderdate',['controller'=>'Chart','action'=>'orderDate'],['_method'=>'GET']);
-	$routes->connect('/chartproductdate',['controller'=>'Chart','action'=>'productDate'],['_method'=>'GET']);
-	$routes->connect('/chartorderstore',['controller'=>'Chart','action'=>'orderStore'],['_method'=>'GET']);
-	$routes->connect('/chartproductstore',['controller'=>'Chart','action'=>'productStore'],['_method'=>'GET']);
+	$routes->connect('/order-report',['controller'=>'Orders','action'=>'orderreport'],['_method'=>'GET']);
+	$routes->connect('/product-report',['controller'=>'Orders','action'=>'Productreport'],['_method'=>'GET']);
 	
 	$routes->fallbacks('DashedRoute');
 	

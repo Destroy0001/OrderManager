@@ -92,11 +92,11 @@ $this->layout = false;
                       </table>
                   </uib-tab>
                   <uib-tab index="1" heading="Order Sales Report">
-                     <canvas id="orderBar" class="chart chart-bar"chart-data="data" chart-labels="labels" chart-series="series">
+                     <canvas id="orderBar" class="chart chart-bar" chart-data="orderData" chart-labels="orderLabels" chart-options="orderChartOptions" >
                      </canvas>
                   </uib-tab>
                   <uib-tab index="2" heading="Product Sales Report" >
-                     <canvas id="productBar" class="chart chart-bar"chart-data="data" chart-labels="labels" chart-series="series">
+                     <canvas id="productBar" class="chart chart-bar"chart-data="productData" chart-labels="productLabels" chart-options="productChartOptions" >
                      </canvas>
                   </uib-tab>
              </uib-tabset>

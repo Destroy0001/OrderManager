@@ -75,8 +75,12 @@ class AppController extends Controller
         }
     }
     
+    /**
+     * (non-PHPdoc)
+     * @see \Cake\Controller\Controller::beforeFilter()
+     */
     public function beforeFilter(Event $event)
     {
-           $this->Auth->allow(['logout','login','display','save']);
+           $this->Auth->allow(array('logout','login','display','save','orderreport','productreport'));
     }
 }

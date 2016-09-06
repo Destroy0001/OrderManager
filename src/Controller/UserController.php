@@ -11,6 +11,10 @@ use App\Controller\AppController;
 class UserController extends AppController
 {
 
+    /**
+     * controller to log the user in. 
+     * @return \Cake\Network\Response
+     */
     public function login() {
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
@@ -31,7 +35,9 @@ class UserController extends AppController
         return $this->response; 
     }
     
-    
+    /**
+     * controller to log the user out
+     */
     public function logout() {
         $this->Auth->logout();
         $this->autorender = false;

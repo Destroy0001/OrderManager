@@ -15,9 +15,8 @@ class OrdersController extends AppController
 {
 
     /**
-     * method: display
-     * methodDescription: Displays orders information
-     * 
+     * Controller to display all orders
+     * @throws UnauthorizedException
      * @throws BadRequestException
      * @return \Cake\Network\Response
      */
@@ -49,8 +48,7 @@ class OrdersController extends AppController
     }
 
     /**
-     * methodName: save
-     * methodDescription: Saves params from the editable grid 
+     * controller to save params from the editable grid 
      * @throws UnauthorizedException
      * @throws BadRequestException
      * @return \Cake\Network\Response
@@ -106,6 +104,78 @@ class OrdersController extends AppController
         $this->autoRender = false;
         $this->response->type('json');
         $this->response->body(json_encode(array("saved"=>true)));
+        return $this->response;
+    }
+    
+    /**
+     * controller to return order reports
+     * Returns Order Report
+     * @throws UnauthorizedException
+     * @throws BadRequestException
+     */
+    public function orderreport(){
+        $userID = $this->Auth->user('id');
+        if(!$userID ){
+            throw new UnauthorizedException();
+        }
+        
+        if(!$this->request->is('get')){
+            throw new BadRequestException('Invalid Request');
+        }
+        $Orders = $this
+        ->Orders
+        ->find('OrderReport',
+                array(
+                        'user' => $userID)
+          );
+        $dates = array();
+        $sales = array();
+        foreach($Orders as $row){
+            $dates[]=date_format($row['orderDate'],"d-m-Y"); 
+            $sales[]=$row['totalOrders'];
+        }
+        
+        $responseJson =array('dates'=>$dates,'sales'=>$sales); 
+        
+        $this->autoRender = false;
+        $this->response->type('json');
+        $this->response->body(json_encode($responseJson));
+        return $this->response;
+    }
+    
+    /**
+     * controller to return product reports
+     * @throws UnauthorizedException
+     * @throws BadRequestException
+     * @return \Cake\Network\Response
+     */
+    public function productreport(){
+        $userID = $this->Auth->user('id');
+        if(!$userID ){
+            throw new UnauthorizedException();
+        }
+    
+        if(!$this->request->is('get')){
+            throw new BadRequestException('Invalid Request');
+        }
+        $Orders = $this
+        ->Orders
+        ->find('ProductReport',
+                array(
+                        'user' => $userID)
+        );
+        $product = array();
+        $sales = array();
+        foreach($Orders as $row){
+            $product[]=$row['productName'];
+            $sales[]=$row['totalOrders'];
+        }
+    
+        $responseJson =array('products'=>$product,'sales'=>$sales);
+        $this->autoRender = false;
+        $this->response->type('json');
+        $this->response->body(json_encode($responseJson));
+        
         return $this->response;
     }
 

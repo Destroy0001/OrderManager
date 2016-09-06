@@ -4,12 +4,16 @@
  */
 
 (function(){
-	var table = angular.module("table", ["ui.bootstrap","ngResource","ngTable","xeditable"]);
+	var table = angular.module("table", ["ui.bootstrap","ngResource","ngTable","xeditable","chart.js"]);
 	table.run(function(editableOptions) {
 		  editableOptions.theme = 'bs3';
 		});
 	table.controller('OrderGridController', function($scope,NgTableParams,$resource,$http) {
-	    var Api = $resource("/orders");
+	    
+		/**
+		 * Process to get all orders as per user 
+		 **/
+		var getAllOrdersApi = $resource("/orders");
 	    $scope.tableParams = new NgTableParams({
 	        page:1,
 	        count:10,
@@ -17,7 +21,7 @@
 	        sorting: {orderID:'asc'}
 	      },{
 	      getData: function(params) {
-	        return Api.query(params.url()).$promise.then(function(data){
+	        return getAllOrdersApi.query(params.url()).$promise.then(function(data){
 	        	//success callback
 	          params.total(data.length);
 	          return data;
@@ -28,6 +32,9 @@
 	      }
 	    });
 	    
+	    /***
+	     * Saving process begins here
+	     ***/
 	    $scope.alerts = [];
 	    $scope.addAlert = function(alertMessage,alertType) {
 	    	$scope.alerts = [];
@@ -57,11 +64,101 @@
 	    						}
 	    						else
 	    							$scope.addAlert('Unknown error occured','danger');
-	    							
 	    					});
 	    };
 	    
+	    
+	    /**
+	     * charting code starts here
+	     * code for number of orders to date 
+	     **/
+	    $scope.orderData = []; 
+	    $scope.orderLabels = []; 
+	    $scope.orderChartOptions = {
+	    		  legend:{
+	    		      display: false
+	    		  },
+	    		  scales: {
+	    		    xAxes: [{
+	    		        gridLines: {
+	    		            show: false,
+	    		        },
+	    		        scaleLabel: {
+	    		            display: true,
+	    		            labelString: 'Date'
+	    		         }
+	    		    }],
+	    		    yAxes: [{
+	    		      ticks: {
+	    		        beginAtZero: true,
+	    		        max:10,
+	    		      },
+    		        scaleLabel: {
+    		            display: true,
+    		            labelString: 'Number of Orders'
+    		          }
+	    		    }]
+	    		 }
+	    };
+	    		    
+	    $http.get("/order-report").then(function(data){
+	    		$scope.orderData.push(data.data.sales);
+	    		$scope.orderLabels = data.data.dates;
+	        }
+	    	,function(data){
+	    		$scope.addAlert('Error Loading Order Report','danger');
+	        });
+	    
+	    /**
+	     * charting code starts here
+	     * code for number of orders to date 
+	     **/
+	    $scope.productData = []; 
+	    $scope.productLabels = []; 
+	    $scope.productChartOptions = {
+	    		  legend:{
+	    		      display: false
+	    		  },
+	    		  scales: {
+	    		    xAxes: [{
+	    		        gridLines: {
+	    		            show: false,
+	    		        },
+	    		        scaleLabel: {
+	    		            display: true,
+	    		            labelString: 'Products'
+	    		         }
+	    		    }],
+	    		    yAxes: [{
+	    		      ticks: {
+	    		        beginAtZero: true,
+	    		        max:10,
+	    		      },
+    		        scaleLabel: {
+    		            display: true,
+    		            labelString: 'Number of Orders'
+    		          }
+	    		    }]
+	    		 }
+	    };
+	    
+	    $http.get("/product-report").then(function(data){
+	    		$scope.productData.push(data.data.sales);
+	    		$scope.productLabels = data.data.products;
+	        }
+	    	,function(data){
+	    		$scope.addAlert('Error loading product report','danger');
+	        });
+	    
+	    
+	    
+	    
 	});
+	
+	
+	
+	
+	
 	
 })();
 

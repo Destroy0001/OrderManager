@@ -114,8 +114,12 @@ class OrdersTable extends Table
     
     
     /**
-     *Custom finder method for fetching all order 
-     **/
+     * Custom finder method to get all orders
+     * @param Query $query
+     * @param array $options
+     * @return unknown
+     */
+     
     public function findOrderData(Query $query, array $options)
     {
         $user = $options['user']; 
@@ -141,5 +145,38 @@ class OrdersTable extends Table
       return $query; 
     } 
 
+    /**
+     * Custom finder method to get total order for each day
+     * @param Query $query
+     * @param array $options
+     * @return $query
+     */
+    public function findOrderReport(Query $query, array $options){
+        $user = $options['user']; 
+        $query = $this->find()
+                      ->select(array('orderDate'=>'CAST(orderDate As DATE)','totalOrders'=>'count(Orders.id)'))
+                      ->contain(array('ProductStore.Product'))
+                      ->where(array('Product.userID'=>$user))
+                      ->group('CAST(orderDate As DATE)')
+                      ->order(array('orderDate' => 'asc'));
+        return $query; 
+    }
+    
+    /**
+     * Custom finder method to get total order for each product
+     * @param Query $query
+     * @param array $options
+     * @return $query
+     */
+    public function findProductReport(Query $query, array $options){
+        $user = $options['user'];
+        $query = $this->find()
+        ->select(array('productName'=>'Product.productName','totalOrders'=>'count(Orders.id)'))
+        ->contain(array('ProductStore.Product'))
+        ->where(array('Product.userID'=>$user))
+        ->group('Product.productName')
+        ->order(array('productName' => 'asc'));
+        return $query;
+    }
     
 }
